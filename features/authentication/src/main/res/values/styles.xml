@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppPage">
+        <item name="android:paddingStart">@dimen/register_side_general_margin</item>
+        <item name="android:paddingEnd">@dimen/register_side_general_margin</item>
+    </style>
+
+    <style name="AppButtons" parent="Widget.Material3.Button">
+        <item name="cornerRadius">15dp</item>
+    </style>
+
+</resources>

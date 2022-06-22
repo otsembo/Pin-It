@@ -1,5 +1,5 @@
 plugins {
-    id(Global.AndroidPlugins.Android)
+    id(Global.AndroidPlugins.Library)
     kotlin(Global.KotlinModules.Android)
 }
 
@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+
     // DEVELOPER LIBS
     implementation(DevLibs.Kotlin)
     implementation(DevLibs.AppCompat)
@@ -44,6 +45,9 @@ dependencies {
     // NAVIGATION
     implementation(DevLibs.NavigationFragment)
     implementation(DevLibs.NavigationUI)
+    implementation("androidx.appcompat:appcompat:1.4.2")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // UNIT TEST LIBS
     testImplementation(TestLibs.Junit4)

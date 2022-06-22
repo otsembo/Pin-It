@@ -29,9 +29,14 @@ android {
     kotlinOptions {
         jvmTarget = Global.JVM_TARGET
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
+
     // MODULE DEPENDENCIES
     implementation(project(":features:authentication"))
 
@@ -43,6 +48,10 @@ dependencies {
     // NAVIGATION
     implementation(DevLibs.NavigationFragment)
     implementation(DevLibs.NavigationUI)
+    implementation(DevLibs.NavigationFeatureModules)
+    implementation("androidx.appcompat:appcompat:1.4.2")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // UNIT TEST LIBS
     testImplementation(TestLibs.Junit4)

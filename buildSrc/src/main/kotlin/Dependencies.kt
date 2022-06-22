@@ -62,6 +62,7 @@ object Global {
     object AndroidPlugins {
 
         const val Android = "com.android.application"
+        const val Library = "com.android.library"
     }
 
     object KotlinModules {
