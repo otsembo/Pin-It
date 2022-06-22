@@ -3,6 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="onBoardingVM"
+            type="com.otsembo.pinit.authentication.presentation.pages.onboarding.OnBoardingVM" />
+
 
     </data>
 
