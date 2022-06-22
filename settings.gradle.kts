@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Pin-It"
 include(":app")
+include(":features:authentication")
