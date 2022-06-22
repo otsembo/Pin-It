@@ -1,19 +1,19 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
+    id(Global.AndroidPlugins.Android)
+    kotlin(Global.KotlinModules.Android)
 }
 
 android {
-    compileSdk = 32
+    compileSdk = Global.AppConfig.COMPILE_SDK
 
     defaultConfig {
-        applicationId = "com.otsembo.pinit"
-        minSdk = 22
-        targetSdk = 32
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = Global.AppConfig.APP_ID
+        minSdk = Global.AppConfig.MIN_SDK
+        targetSdk = Global.AppConfig.TARGET_SDK
+        versionCode = Global.AppConfig.VERSION_CODE
+        versionName = Global.AppConfig.VERSION_NAME
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = Global.INSTRUMENTATION_RUNNER
     }
 
     buildTypes {
@@ -27,16 +27,20 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = Global.JVM_TARGET
     }
 }
 
 dependencies {
+    // DEVELOPER LIBS
+    implementation(DevLibs.Kotlin)
+    implementation(DevLibs.AppCompat)
+    implementation(DevLibs.GoogleMaterial)
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("com.google.android.material:material:1.6.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    // UNIT TEST LIBS
+    testImplementation(TestLibs.Junit4)
+
+    // ANDROID AND INSTRUMENTATION LIBS
+    androidTestImplementation(InstrumentationTestLibs.AndroidJunit)
+    androidTestImplementation(InstrumentationTestLibs.Espresso)
 }
