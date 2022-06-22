@@ -32,10 +32,17 @@ android {
 }
 
 dependencies {
+    // MODULE DEPENDENCIES
+    implementation(project(":features:authentication"))
+
     // DEVELOPER LIBS
     implementation(DevLibs.Kotlin)
     implementation(DevLibs.AppCompat)
     implementation(DevLibs.GoogleMaterial)
+
+    // NAVIGATION
+    implementation(DevLibs.NavigationFragment)
+    implementation(DevLibs.NavigationUI)
 
     // UNIT TEST LIBS
     testImplementation(TestLibs.Junit4)
@@ -43,4 +50,5 @@ dependencies {
     // ANDROID AND INSTRUMENTATION LIBS
     androidTestImplementation(InstrumentationTestLibs.AndroidJunit)
     androidTestImplementation(InstrumentationTestLibs.Espresso)
+    androidTestImplementation(InstrumentationTestLibs.Navigation)
 }

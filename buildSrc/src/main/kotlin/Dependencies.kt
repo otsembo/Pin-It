@@ -3,6 +3,8 @@ object LibVersions {
     const val Kotlin = "1.7.0"
     const val AppCompat = "1.4.2"
     const val GoogleMaterial = "1.6.1"
+
+    const val Navigation = "2.4.2"
 }
 
 object TestVersions {
@@ -21,6 +23,11 @@ object DevLibs {
     const val Kotlin = "androidx.core:core-ktx:${LibVersions.Kotlin}"
     const val AppCompat = "androidx.appcompat:appcompat:${LibVersions.AppCompat}"
     const val GoogleMaterial = "com.google.android.material:material:${LibVersions.GoogleMaterial}"
+
+    // Navigation
+    const val NavigationFragment = "androidx.navigation:navigation-fragment-ktx:${LibVersions.Navigation}"
+    const val NavigationUI = "androidx.navigation:navigation-ui-ktx:${LibVersions.Navigation}"
+    const val NavigationFeatureModules = "androidx.navigation:navigation-dynamic-features-fragment:${LibVersions.Navigation}"
 }
 
 object TestLibs {
@@ -32,6 +39,7 @@ object InstrumentationTestLibs {
 
     const val AndroidJunit = "androidx.test.ext:junit:${InstrumentationTestVersions.AndroidJunit}"
     const val Espresso = "androidx.test.espresso:espresso-core:${InstrumentationTestVersions.Espresso}"
+    const val Navigation = "androidx.navigation:navigation-testing:${LibVersions.Navigation}"
 }
 
 object Global {

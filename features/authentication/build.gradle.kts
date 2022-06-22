@@ -41,10 +41,15 @@ dependencies {
     implementation(DevLibs.AppCompat)
     implementation(DevLibs.GoogleMaterial)
 
+    // NAVIGATION
+    implementation(DevLibs.NavigationFragment)
+    implementation(DevLibs.NavigationUI)
+
     // UNIT TEST LIBS
     testImplementation(TestLibs.Junit4)
 
     // ANDROID AND INSTRUMENTATION LIBS
     androidTestImplementation(InstrumentationTestLibs.AndroidJunit)
     androidTestImplementation(InstrumentationTestLibs.Espresso)
+    androidTestImplementation(InstrumentationTestLibs.Navigation)
 }
