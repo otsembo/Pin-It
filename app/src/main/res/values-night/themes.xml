@@ -32,4 +32,19 @@
 
         <item name="fontFamily">@font/ruluko</item>
     </style>
+
+    <style name="Auth" parent="AppPage">
+        <item name="background">@color/md_theme_dark_surfaceVariant</item>
+    </style>
+
+    <style name="AuthRegisterButton" parent="AppButtons">
+        <item name="backgroundTint">@color/md_theme_dark_tertiary</item>
+        <item name="android:textColor">@color/md_theme_dark_onTertiary</item>
+    </style>
+
+    <style name="AuthLoginButton" parent="AppButtons">
+        <item name="backgroundTint">@color/md_theme_dark_primaryContainer</item>
+        <item name="android:textColor">@color/md_theme_dark_onPrimaryContainer</item>
+    </style>
+
 </resources>

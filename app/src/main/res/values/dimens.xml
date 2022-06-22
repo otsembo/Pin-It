@@ -9,6 +9,9 @@
     <dimen name="edt_text_margin">32dp</dimen>
     <dimen name="register_side_general_margin">16dp</dimen>
 
+    <dimen name="onboarding_card_radius">50dp</dimen>
+    <dimen name="onboarding_title">32sp</dimen>
+    <dimen name="onboarding_desc">17sp</dimen>
 
-    <dimen name="button_height">55dp</dimen>
+    <dimen name="button_height">65dp</dimen>
 </resources>

@@ -9,7 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/Auth">
+        android:paddingStart="@dimen/register_side_general_margin"
+        android:paddingEnd="@dimen/register_side_general_margin">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
@@ -27,7 +28,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="@dimen/general_field_margin"
-            android:text="@string/login_title"
+            android:text="@string/register_title"
             android:textSize="@dimen/register_title_size"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/login_desc"
+            android:text="@string/register_title_Desc"
             android:textSize="@dimen/register_title_desc_size"
             app:layout_constraintTop_toBottomOf="@id/txtRegisterTitle"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +55,7 @@
             app:layout_constraintTop_toBottomOf="@id/txtRegisterText"
             android:layout_marginTop="@dimen/edt_text_margin"
             app:hintEnabled="true"
-            android:hint="@string/username_email"
+            android:hint="@string/email"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:id="@+id/tilEmail">
 
@@ -67,12 +68,32 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilEmail"
+            android:layout_marginTop="@dimen/general_field_margin"
+            app:hintEnabled="true"
+            android:hint="@string/username"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:id="@+id/tilUsername">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtUsername"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilUsername"
             android:layout_marginTop="@dimen/general_field_margin"
             app:hintEnabled="true"
             android:hint="@string/password"
@@ -87,26 +108,16 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilPassword"
-            android:text="@string/recover_password"
-            android:id="@+id/txtForgotPassword"
-            android:layout_marginTop="@dimen/general_field_margin" />
-
         <Button
             android:layout_width="0dp"
             android:id="@+id/btnSignIn"
             android:layout_height="@dimen/button_height"
-            android:text="@string/sign_in"
-            app:layout_constraintTop_toBottomOf="@id/txtForgotPassword"
+            android:text="@string/create_account"
+            app:layout_constraintTop_toBottomOf="@id/tilPassword"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/edt_text_margin"
-            style="@style/AuthLoginButton"/>
+            style="@style/AuthRegisterButton"/>
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -122,7 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/txtGoToRegister"
-            android:text="@string/not_registered_yet_create_an_account"
+            android:text="@string/already_have_an_account_login"
             android:textSize="@dimen/register_title_desc_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
