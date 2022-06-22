@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Pin-It</string>
+
+    <string name="register_title">Glad, you are here</string>
+    <string name="register_title_Desc">Time to start you journey of discovery</string>
+    <string name="username_email">USERNAME / EMAIL</string>
+    <string name="password">PASSWORD</string>
+    <string name="recover_password">Recover Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="not_registered_yet_create_an_account">Not registered yet? Create An Account</string>
 </resources>
