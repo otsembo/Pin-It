@@ -5,7 +5,7 @@
     <application>
         <activity
             android:name=".presentation.pages.MainActivity"
-            android:exported="false" />
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.otsembo.pinit.authentication.R
 import com.otsembo.pinit.authentication.databinding.FragmentAuthOnboardingBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class OnBoarding : Fragment() {

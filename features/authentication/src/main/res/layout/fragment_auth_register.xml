@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="create"
+            type="com.otsembo.pinit.authentication.presentation.pages.register.AccountCreate" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtEmail"
+                android:text="@={create.email}"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,6 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtUsername"
+                android:text="@={create.username}"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -104,6 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtPassword"
+                android:text="@={create.password}"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>

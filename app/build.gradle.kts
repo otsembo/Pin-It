@@ -1,6 +1,10 @@
 plugins {
     id(Global.AndroidPlugins.Android)
+    id(Global.AndroidPlugins.GoogleServices)
     kotlin(Global.KotlinModules.Android)
+    kotlin(Global.KotlinModules.KotlinSerialization)
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -49,15 +53,36 @@ dependencies {
     implementation(DevLibs.NavigationFragment)
     implementation(DevLibs.NavigationUI)
     implementation(DevLibs.NavigationFeatureModules)
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    // FIREBASE
+    platform(DevLibs.Firebase)
+    implementation(DevLibs.FirebaseAnalytics)
+    implementation(DevLibs.CoroutinePlayServices)
+
+    // DAGGER HILT
+    implementation(DevLibs.HiltAndroid)
+    kapt(DevLibs.HiltAndroidCompiler)
+    implementation(DevLibs.HiltLifeCycle)
+    kapt(DevLibs.HiltCompiler)
+
+    // Koin
+    implementation(DevLibs.KoinCore)
+    implementation(DevLibs.KoinAndroid)
+
+    implementation(DevLibs.LifecycleRuntime)
+    kapt(DevLibs.LifecycleProcessor)
 
     // UNIT TEST LIBS
     testImplementation(TestLibs.Junit4)
+    testImplementation(TestLibs.KoinTest)
+    testImplementation(TestLibs.KoinJunitTest)
 
     // ANDROID AND INSTRUMENTATION LIBS
     androidTestImplementation(InstrumentationTestLibs.AndroidJunit)
     androidTestImplementation(InstrumentationTestLibs.Espresso)
     androidTestImplementation(InstrumentationTestLibs.Navigation)
+}
+
+kapt {
+    correctErrorTypes = true
 }
