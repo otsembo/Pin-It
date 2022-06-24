@@ -4,18 +4,16 @@ import androidx.lifecycle.ViewModel
 import com.otsembo.pinit.authentication.common.AppResource
 import com.otsembo.pinit.authentication.data.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 class RegisterVM constructor(private val authRepository: AuthRepository) : ViewModel() {
 
-    private val _registrationProcess: MutableStateFlow<AppResource<*>> = MutableStateFlow(AppResource.Idle())
-    val registrationProcess: StateFlow<AppResource<*>>
-        get() = _registrationProcess
+    var registrationProcess: MutableStateFlow<AppResource<*>> = MutableStateFlow(AppResource.Idle())
+        private set
 
     suspend fun createAccount(accountCreate: AccountCreate) {
-        _registrationProcess.emit(AppResource.Loading<String>())
+        registrationProcess.emit(AppResource.Loading<String>())
         val result = authRepository.createAccount(accountCreate.email, accountCreate.password, accountCreate.username)
-        _registrationProcess.emit(if (result) AppResource.Success(result) else AppResource.Error(message = "Failed to create account", data = !result))
+        registrationProcess.emit(if (result.first) AppResource.Success(result.first) else AppResource.Error(message = result.second, data = result.first))
     }
 
     companion object {
