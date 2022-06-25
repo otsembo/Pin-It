@@ -44,6 +44,9 @@ class LoginFragment : Fragment() {
                 )
             }
         }
+
+        binding.txtGoToRegister.setOnClickListener {
+        }
     }
 
     private fun initUIObservers() {
@@ -54,7 +57,9 @@ class LoginFragment : Fragment() {
                     Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
                 }
             }
+        }
 
+        lifecycleScope.launchWhenStarted {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.loginStatus.collect {
                     when (it) {

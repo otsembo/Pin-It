@@ -42,7 +42,7 @@ android {
 dependencies {
 
     // MODULE DEPENDENCIES
-    implementation(project(":features:authentication"))
+    implementation(project(":core:authentication"))
 
     // DEVELOPER LIBS
     implementation(DevLibs.Kotlin)

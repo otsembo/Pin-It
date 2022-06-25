@@ -5,19 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.otsembo.pinit.authentication.R
 import com.otsembo.pinit.authentication.databinding.FragmentAuthOnboardingBinding
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OnBoarding : Fragment() {
     // binding object
     private lateinit var binding: FragmentAuthOnboardingBinding
 
     // view model
-    private val viewModel: OnBoardingVM by viewModels()
+    private val viewModel: OnBoardingVM by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,38 +38,32 @@ class OnBoarding : Fragment() {
 
     // init navigation listeners
     private fun initNavigationObservers() {
+
         lifecycleScope.launchWhenResumed {
-            viewModel.loginNavigation.collect { if (it) navigateToLogin() }
+            viewModel.navigationTrigger.collectLatest {
+                try {
+                    navigate(it)
+                } catch (e: Exception) {
+                    Unit
+                }
+            }
         }
-        lifecycleScope.launchWhenResumed {
-            viewModel.registerNavigation.collect { if (it) navigateToRegister() }
-        }
+    }
+
+    // navigate from onboarding
+    private fun navigate(actionId: Int) {
+        binding.root.findNavController().navigate(actionId)
     }
 
     // init click listeners
     private fun initClickListeners() {
         with(binding) {
             btnLogin.setOnClickListener {
-                lifecycleScope.launch {
-                    viewModel.navigateToLogin(true)
-                }
+                viewModel.navigate(R.id.action_onBoarding_to_loginFragment)
             }
             btnRegister.setOnClickListener {
-                lifecycleScope.launch {
-                    viewModel.navigateToRegister(true)
-                }
+                viewModel.navigate(R.id.action_onBoarding_to_registerFragment)
             }
         }
-    }
-
-    // navigation
-    private suspend fun navigateToRegister() {
-        binding.root.findNavController().navigate(R.id.action_onBoarding_to_registerFragment)
-        viewModel.navigateToRegister(false)
-    }
-
-    private suspend fun navigateToLogin() {
-        binding.root.findNavController().navigate(R.id.action_onBoarding_to_loginFragment)
-        viewModel.navigateToLogin(false)
     }
 }
