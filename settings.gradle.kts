@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "Pin-It"
 include(":app")
 include(":core:authentication")
+include(":core:navigation")
+include(":features:notes")
