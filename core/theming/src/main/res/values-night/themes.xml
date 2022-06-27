@@ -47,4 +47,8 @@
         <item name="android:textColor">@color/md_theme_dark_onPrimaryContainer</item>
     </style>
 
+    <style name="IconButtons" parent="AppButtons">
+        <item name="drawableTint">@color/md_theme_dark_onPrimary</item>
+    </style>
+
 </resources>

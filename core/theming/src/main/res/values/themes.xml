@@ -48,4 +48,8 @@
         <item name="android:textColor">@color/md_theme_light_onPrimaryContainer</item>
     </style>
 
+    <style name="IconButtons" parent="AppButtons">
+        <item name="drawableTint">@color/md_theme_light_onPrimary</item>
+    </style>
+
 </resources>
