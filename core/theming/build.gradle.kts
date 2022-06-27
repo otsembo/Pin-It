@@ -30,40 +30,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    buildFeatures {
-        dataBinding = true
-    }
 }
 
 dependencies {
-
-    // module dependencies
-    implementation(project(":core:theming"))
 
     // DEVELOPER LIBS
     implementation(DevLibs.Kotlin)
     implementation(DevLibs.AppCompat)
     implementation(DevLibs.GoogleMaterial)
-
-    // NAVIGATION
-    implementation(DevLibs.NavigationFragment)
-    implementation(DevLibs.NavigationUI)
-
-    // FIREBASE
-    platform(DevLibs.Firebase)
-    implementation(DevLibs.FirebaseAnalytics)
-    implementation(DevLibs.FirebaseAuth)
-    implementation(DevLibs.FirebaseCloudStorage)
-    implementation(DevLibs.FirebaseFirestore)
-
-    // UNIT TEST LIBS
-    testImplementation(TestLibs.Junit4)
-    testImplementation(TestLibs.KoinTest)
-    testImplementation(TestLibs.KoinJunitTest)
-
-    // ANDROID AND INSTRUMENTATION LIBS
-    androidTestImplementation(InstrumentationTestLibs.AndroidJunit)
-    androidTestImplementation(InstrumentationTestLibs.Espresso)
-    androidTestImplementation(InstrumentationTestLibs.Navigation)
 }

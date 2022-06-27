@@ -42,6 +42,7 @@ android {
 dependencies {
 
     // MODULE DEPENDENCIES
+    implementation(project(":core:theming"))
     implementation(project(":core:authentication"))
     implementation(project(":core:navigation"))
     implementation(project(":features:notes"))
