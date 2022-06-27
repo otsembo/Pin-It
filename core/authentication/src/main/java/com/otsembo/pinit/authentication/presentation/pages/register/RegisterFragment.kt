@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
+import com.otsembo.pinit.authentication.R
 import com.otsembo.pinit.authentication.common.AppResource
 import com.otsembo.pinit.authentication.databinding.FragmentAuthRegisterBinding
 import kotlinx.coroutines.flow.collectLatest
@@ -46,6 +48,9 @@ class RegisterFragment : Fragment() {
             lifecycleScope.launchWhenResumed {
                 registerVM.createAccount(userAccountCreate)
             }
+        }
+        binding.txtGoToLogin.setOnClickListener {
+            it.findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
     }
 

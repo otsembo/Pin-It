@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.otsembo.pinit.authentication.R
 import com.otsembo.pinit.authentication.common.AppResource
 import com.otsembo.pinit.authentication.databinding.FragmentAuthLoginBinding
 import kotlinx.coroutines.flow.collectLatest
@@ -46,6 +48,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.txtGoToRegister.setOnClickListener {
+            it.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
 

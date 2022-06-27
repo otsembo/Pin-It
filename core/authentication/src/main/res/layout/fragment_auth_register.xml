@@ -130,14 +130,14 @@
             app:layout_constraintTop_toBottomOf="@id/btnSignIn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/txtGoToRegister"
+            app:layout_constraintBottom_toTopOf="@id/txtGoToLogin"
             android:id="@+id/pbSignIn" />
 
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/txtGoToRegister"
+            android:id="@+id/txtGoToLogin"
             android:text="@string/already_have_an_account_login"
             android:textSize="@dimen/register_title_desc_size"
             app:layout_constraintBottom_toBottomOf="parent"
