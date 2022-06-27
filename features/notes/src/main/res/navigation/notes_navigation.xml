@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/notes_navigation"
-    app:startDestination="@id/notesFragment">
+    app:startDestination="@id/fragmentDashboard">
 
     <fragment
-        android:id="@+id/notesFragment"
+        android:id="@+id/fragmentDashboard"
         android:name="com.otsembo.notes.presentation.NotesFragment"
         android:label="NotesFragment"
         tools:layout="@layout/fragment_dashboard"/>

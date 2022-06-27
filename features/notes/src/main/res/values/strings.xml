@@ -2,4 +2,5 @@
     <string name="notes_intro">Welcome to PinIt\nYou do not seem to have any notes added yet.\nStart creating some</string>
     <string name="create_note">CREATE NOTE</string>
     <string name="create_notes_button">Create Notes Button</string>
+    <string name="dashboard">Dashboard</string>
 </resources>
