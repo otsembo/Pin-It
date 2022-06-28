@@ -13,12 +13,24 @@
         tools:context=".presentation.MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:navGraph="@navigation/main_navigation"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:navGraph="@navigation/app_navigation"
             app:defaultNavHost="true"
             android:id="@+id/main_container"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottomNavNotes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:name="androidx.navigation.fragment.NavHostFragment" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bottomNavNotes"
+            app:menu="@menu/app_navigation_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
