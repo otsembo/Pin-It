@@ -37,6 +37,58 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtLatestNotes"
+                android:text="NOTES"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                style="@style/TextIconButtons"
+                app:drawableStartCompat="@drawable/ic_dashboard"
+                android:drawablePadding="@dimen/general_field_margin"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rvLatestNotesList"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/general_field_margin"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/notes_card_item"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtUpcomingReminders"
+                android:text="REMINDERS"
+                android:layout_marginTop="@dimen/edt_text_margin"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                style="@style/TextIconButtons"
+                app:drawableStartCompat="@drawable/ic_reminder"
+                android:drawablePadding="@dimen/general_field_margin"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rvUplcomingReminderList"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/general_field_margin"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/reminder_card_item"/>
+
+        </LinearLayout>
+
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

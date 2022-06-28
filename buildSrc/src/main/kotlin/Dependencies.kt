@@ -21,6 +21,8 @@ object LibVersions {
     const val KoinVersion = "3.2.0"
 
     const val CoroutinePlayServices = "1.5.1"
+
+    const val CircleImage = "3.1.0"
 }
 
 object TestVersions {
@@ -71,6 +73,9 @@ object DevLibs {
 
     // play services coroutines
     const val CoroutinePlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${LibVersions.CoroutinePlayServices}"
+
+    // CIRCLE IMAGEVIEW
+    const val CircleImageView = "de.hdodenhof:circleimageview:${LibVersions.CircleImage}"
 }
 
 object TestLibs {

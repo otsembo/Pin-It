@@ -51,6 +51,9 @@ dependencies {
     implementation(DevLibs.NavigationFragment)
     implementation(DevLibs.NavigationUI)
 
+    // CIRCLE IMAGE VIEW
+    implementation(DevLibs.CircleImageView)
+
     // FIREBASE
     platform(DevLibs.Firebase)
     implementation(DevLibs.FirebaseAnalytics)

@@ -19,7 +19,10 @@
         <entry key="features/authentication/src/main/res/layout/fragment_auth_login.xml" value="0.1" />
         <entry key="features/authentication/src/main/res/layout/fragment_auth_onboarding.xml" value="0.3632246376811594" />
         <entry key="features/authentication/src/main/res/layout/fragment_auth_register.xml" value="0.3632246376811594" />
+        <entry key="features/dashboard/src/main/res/drawable/ic_reminder.xml" value="0.2005" />
         <entry key="features/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.2987307343608341" />
+        <entry key="features/dashboard/src/main/res/layout/notes_card_item.xml" value="0.2987307343608341" />
+        <entry key="features/dashboard/src/main/res/layout/reminder_card_item.xml" value="0.29884566053869177" />
         <entry key="features/notes/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="features/notes/src/main/res/layout/fragment_dashboard.xml" value="0.3442028985507246" />
         <entry key="features/notes/src/main/res/menu/bottom_menu.xml" value="0.2975630611372381" />
