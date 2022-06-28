@@ -35,7 +35,7 @@ android {
 dependencies {
 
     implementation(project(":core:authentication"))
-    implementation(project(":features:notes"))
+    implementation(project(":features:dashboard"))
 
     // DEVELOPER LIBS
     implementation(DevLibs.Kotlin)

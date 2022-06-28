@@ -5,4 +5,19 @@
         android:icon="@drawable/ic_dashboard"
         android:id="@+id/notes_navigation"
         />
+    <item
+        android:title="Notes"
+        android:icon="@drawable/ic_notes"
+        android:id="@+id/app_notes_navigation"
+        />
+    <item
+        android:title="Reminders"
+        android:icon="@drawable/ic_reminder"
+        android:id="@+id/reminders_navigation"
+        />
+    <item
+        android:title="Profile"
+        android:icon="@drawable/ic_profile"
+        android:id="@+id/profile_navigation"
+        />
 </menu>

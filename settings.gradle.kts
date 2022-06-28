@@ -23,5 +23,5 @@ rootProject.name = "Pin-It"
 include(":app")
 include(":core:authentication")
 include(":core:navigation")
-include(":features:notes")
+include(":features:dashboard")
 include(":core:theming")
