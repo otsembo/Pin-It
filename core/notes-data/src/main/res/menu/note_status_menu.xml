@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="DONE"
+        android:icon="@drawable/ic_done"
+        android:id="@+id/actionStatusDone"/>
+
+    <item
+        android:title="IN PROGRESS"
+        android:icon="@drawable/ic_ongoing"
+        android:id="@+id/actionStatusOngoing"/>
+
+    <item
+        android:title="TO DO"
+        android:icon="@drawable/ic_todo"
+        android:id="@+id/actionStatusTodo"/>
+
+
+</menu>

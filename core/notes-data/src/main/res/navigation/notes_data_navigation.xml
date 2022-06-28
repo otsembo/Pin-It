@@ -2,25 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/notes_navigation"
-    app:startDestination="@id/fragmentDashboard">
+    android:id="@+id/notes_data_navigation"
+    app:startDestination="@id/notesEditFragment">
 
-    <fragment
-        android:id="@+id/fragmentDashboard"
-        android:name="com.otsembo.notes.presentation.NotesFragment"
-        android:label="NotesFragment"
-        tools:layout="@layout/fragment_dashboard">
-
-
-        <action
-            android:id="@+id/dashboardToNotesEdit"
-            app:destination="@id/notesEditFragment" />
-    </fragment>
     <dialog
         android:id="@+id/notesEditFragment"
         android:name="com.otsembo.pinit.notes_data.presentation.add.NotesEditFragment"
         android:label="NotesEditFragment"
         tools:layout="@layout/fragment_note_edit"/>
-
-
 </navigation>

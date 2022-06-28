@@ -1,6 +1,9 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    id(Global.AndroidPlugins.Library)
+    id(Global.AndroidPlugins.GoogleServices)
+    kotlin(Global.KotlinModules.Android)
+    kotlin(Global.KotlinModules.KotlinSerialization)
+    kotlin("kapt")
 }
 
 android {
@@ -38,9 +41,7 @@ android {
 
 dependencies {
 
-    // module dependencies
     implementation(project(":core:theming"))
-    implementation(project(":core:notes-data"))
 
     // DEVELOPER LIBS
     implementation(DevLibs.Kotlin)
@@ -58,6 +59,25 @@ dependencies {
     implementation(DevLibs.FirebaseCloudStorage)
     implementation(DevLibs.FirebaseFirestore)
 
+    // Kotlin Serialization
+    implementation(DevLibs.KotlinSerialization)
+
+    // DAGGER HILT
+    implementation(DevLibs.HiltAndroid)
+    kapt(DevLibs.HiltAndroidCompiler)
+    implementation(DevLibs.HiltLifeCycle)
+    kapt(DevLibs.HiltCompiler)
+
+    implementation(DevLibs.LifecycleRuntime)
+    kapt(DevLibs.LifecycleProcessor)
+
+    // Koin
+    implementation(DevLibs.KoinCore)
+    implementation(DevLibs.KoinAndroid)
+
+    // Coroutine Play Services
+    implementation(DevLibs.CoroutinePlayServices)
+
     // UNIT TEST LIBS
     testImplementation(TestLibs.Junit4)
     testImplementation(TestLibs.KoinTest)
@@ -67,4 +87,8 @@ dependencies {
     androidTestImplementation(InstrumentationTestLibs.AndroidJunit)
     androidTestImplementation(InstrumentationTestLibs.Espresso)
     androidTestImplementation(InstrumentationTestLibs.Navigation)
+}
+
+kapt {
+    correctErrorTypes = true
 }

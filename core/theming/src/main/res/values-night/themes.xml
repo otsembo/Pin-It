@@ -51,4 +51,12 @@
         <item name="drawableTint">@color/md_theme_dark_onPrimary</item>
     </style>
 
+    <style name="CloseDialogs">
+        <item name="tint">@color/md_theme_dark_onPrimaryContainer</item>
+    </style>
+
+    <style name="DialogIcons">
+        <item name="drawableTint">@color/md_theme_dark_onPrimaryContainer</item>
+    </style>
+
 </resources>

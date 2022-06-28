@@ -16,4 +16,11 @@
     <string name="login_desc">Let us get back to your journey</string>
     <string name="thinking_of_something_npin_it_here">Thinking of something?\nPin it here</string>
     <string name="safe_space">This is your safe space. Take the time to engage your thoughts, plan your day and many more.</string>
+
+    <string-array name="task_status">
+        <item>TO DO</item>
+        <item>ONGOING</item>
+        <item>DONE</item>
+    </string-array>
+
 </resources>

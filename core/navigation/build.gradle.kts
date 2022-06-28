@@ -35,6 +35,7 @@ android {
 dependencies {
 
     implementation(project(":core:authentication"))
+    implementation(project(":core:notes-data"))
     implementation(project(":features:dashboard"))
 
     // DEVELOPER LIBS

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/dialogAppBar"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/DialogAppBar">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/register_side_general_margin"
+                android:layout_marginEnd="@dimen/register_side_general_margin">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_close"
+                    android:id="@+id/imgClose"
+                    android:layout_gravity="start"
+                    style="@style/CloseDialogs"
+                    android:scaleType="center" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/note_save"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="end|center_vertical"
+                    android:id="@+id/txtSave" />
+
+            </FrameLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="true"
+            android:hint="Title"
+            android:id="@+id/tilNoteTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialogAppBar"
+            android:layout_marginStart="@dimen/register_side_general_margin"
+            android:layout_marginEnd="@dimen/register_side_general_margin"
+            android:layout_marginTop="@dimen/edt_text_margin"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtNoteTitle"
+                android:inputType="text" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="true"
+            android:hint="Description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilNoteTitle"
+            android:layout_marginStart="@dimen/register_side_general_margin"
+            android:layout_marginEnd="@dimen/register_side_general_margin"
+            android:layout_marginTop="@dimen/general_field_margin"
+            android:gravity="top"
+            android:id="@+id/tilNoteDesc"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="150dp"
+                android:id="@+id/edtNoteDescription"
+                android:inputType="textMultiLine"
+                android:minLines="10"
+                android:gravity="top" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+            app:layout_constraintTop_toBottomOf="@id/tilNoteDesc"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:hint="@string/to_do"
+            android:id="@+id/tilTodo"
+            android:layout_marginTop="@dimen/general_field_margin"
+            android:layout_marginEnd="@dimen/register_side_general_margin">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                app:simpleItems="@array/task_status"
+                tools:labelFor="@string/to_do" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilTodo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="@dimen/register_side_general_margin"
+            android:layout_marginEnd="@dimen/register_side_general_margin"
+            android:layout_marginTop="@dimen/edt_text_margin"
+            android:layout_marginBottom="@dimen/edt_text_margin">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:id="@+id/txtAddPhoto"
+                android:text="ADD A PHOTO"
+                android:drawableTop="@drawable/ic_photo_add"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                style="@style/DialogIcons"
+                android:layout_gravity="center" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/noteImage"
+                android:scaleType="centerCrop" />
+
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

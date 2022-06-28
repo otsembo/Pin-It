@@ -9,4 +9,10 @@
         <item name="cornerRadius">15dp</item>
     </style>
 
+    <style name="DialogAppBar" parent="Widget.Material3.AppBarLayout">
+        <item name="height">?attr/actionBarSize</item>
+    </style>
+
+
+
 </resources>
