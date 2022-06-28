@@ -14,5 +14,8 @@
     </style>
 
 
+    <style name="FullScreenDialog" parent="Widget.Material3.MaterialCalendar.Fullscreen">
+
+    </style>
 
 </resources>

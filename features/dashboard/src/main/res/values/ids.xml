@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="notesEditFragment" type="id">notesEditFragment</item>
+   <!-- <item name="notesEditFragment" type="id">notesEditFragment</item>
     <item name="action_fragmentDashboard_to_notesEditFragment" type="id">
         action_fragmentDashboard_to_notesEditFragment
     </item>
-    <item name="action_fragmentDashboard_to_notesEditFragment" type="id">
-        action_fragmentDashboard_to_notesEditFragment
-    </item>
-    <item name="action_fragmentDashboard_to_notesEditFragment" type="id">
-        action_fragmentDashboard_to_notesEditFragment
-    </item>
-    <item name="action_fragmentDashboard_to_notesEditFragment" type="id">
-        action_fragmentDashboard_to_notesEditFragment
-    </item>
-    <item name="dashboardToNotesEdit" type="id">dashboardToNotesEdit</item>
+    <item name="dashboardToNotesEdit" type="id">dashboardToNotesEdit</item>-->
 </resources>
