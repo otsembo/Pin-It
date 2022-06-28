@@ -32,5 +32,8 @@ class NotesFragment : Fragment() {
         binding.fabNotes.setOnClickListener {
             navController.navigate(R.id.dashboardToNotesEdit)
         }
+        binding.btnNotes.setOnClickListener {
+            navController.navigate(R.id.dashboardToNotesEdit)
+        }
     }
 }

@@ -31,6 +31,7 @@
             android:text="@string/create_note"
             android:drawableLeft="@drawable/ic_add"
             style="@style/IconButtons"
+            android:id="@+id/btnNotes"
             android:layout_marginTop="@dimen/edt_text_margin"
             app:layout_constraintTop_toBottomOf="@id/txtNotesIntro"
             app:layout_constraintStart_toStartOf="parent"
