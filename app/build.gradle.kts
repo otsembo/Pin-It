@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":core:authentication"))
     implementation(project(":features:dashboard"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:notes-data"))
 
     // DEVELOPER LIBS
     implementation(DevLibs.Kotlin)
