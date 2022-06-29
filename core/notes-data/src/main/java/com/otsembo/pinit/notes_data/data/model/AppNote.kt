@@ -4,12 +4,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AppNote(
-    val noteId: String? = null,
-    val noteTitle: String? = null,
-    val description: String? = null,
-    val status: NoteStatus = NoteStatus.TODO,
-    val user: String,
-    val imageUrl: String? = null
+    var noteId: String? = null,
+    var noteTitle: String? = null,
+    var description: String? = null,
+    var status: NoteStatus = NoteStatus.TODO,
+    var user: String,
+    var imageUrl: String? = null
 )
 
 enum class NoteStatus(status: String) {
