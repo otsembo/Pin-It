@@ -1,5 +1,6 @@
 package com.otsembo.pinit.notes_data.data.repository
 
+import android.graphics.Bitmap
 import com.otsembo.pinit.notes_data.common.AppResource
 import com.otsembo.pinit.notes_data.data.model.AppNote
 import kotlinx.coroutines.flow.SharedFlow
@@ -12,4 +13,5 @@ interface NotesRepository : KoinComponent {
     suspend fun updateNote(appNote: AppNote): String
     suspend fun deleteNote(noteId: String): String
     fun displayNotes(): StateFlow<AppResource<List<AppNote>>>
+    suspend fun storeImage(imageBitmap: Bitmap): String
 }

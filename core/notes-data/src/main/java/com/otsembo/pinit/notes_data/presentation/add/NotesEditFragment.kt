@@ -1,18 +1,28 @@
 package com.otsembo.pinit.notes_data.presentation.add
 
+import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.app.Dialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.transition.TransitionInflater
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.otsembo.pinit.notes_data.common.AppResource
 import com.otsembo.pinit.notes_data.data.model.AppNote
-import com.otsembo.pinit.notes_data.data.model.NoteStatus
 import com.otsembo.pinit.notes_data.databinding.FragmentNoteEditBinding
 import com.otsembo.pinit.notes_data.presentation.viewmodels.NoteEditVM
 import kotlinx.coroutines.flow.collectLatest
@@ -52,25 +62,48 @@ class NotesEditFragment : DialogFragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        saveUiData(outState)
+    }
+
     private fun initClicks() {
         binding.imgClose.setOnClickListener {
             dismiss()
         }
         binding.txtSave.setOnClickListener {
-            appNote.status = when (binding.txtNoteStatus.text.toString().uppercase()) {
-                NoteStatus.TODO.status -> NoteStatus.TODO
-                NoteStatus.ONGOING.status -> NoteStatus.ONGOING
-                NoteStatus.DONE.status -> NoteStatus.DONE
-                else -> NoteStatus.DONE
-            }
+            appNote.status = viewModel.selectStatus(binding.txtNoteStatus.text.toString())
             viewModel.createNote(appNote)
             dismiss()
         }
+        binding.txtAddPhoto.setOnClickListener {
+            Log.d("TAG", "initClicks: clicked")
+            when {
+                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> { selectImage() }
+                shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                    messageDialog(
+                        "Permission not granted." +
+                            " In order for you to upload images, you need to enable storage permission." +
+                            "\nYou will not be able to use this feature without it.",
+                        actionKey = "GIVE PERMISSION", action = { permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE) }
+                    ).show()
+                }
+                else -> permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+        }
+    }
+
+    private fun selectImage() {
+        val intent = Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT)
+        activityResultLauncher.launch(intent)
     }
 
     private suspend fun initFlowObservers() {
         viewModel.errorFlow.collectLatest {
             displayMessage(it)
+        }
+        viewModel.notesImageLocation.collectLatest {
+            appNote.imageUrl = it
         }
         viewModel.notes.collect {
             when (it) {
@@ -82,13 +115,26 @@ class NotesEditFragment : DialogFragment() {
         }
     }
 
-    private fun displayMessage(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+    private val activityResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == RESULT_OK) {
+            val intent = it.data
+            val data = intent?.data
+            val bitmap: Bitmap? = try {
+                MediaStore.Images.Media.getBitmap(requireContext().contentResolver, data)
+            } catch (e: Exception) { null }
+            binding.noteImage.setImageBitmap(bitmap)
+            if (bitmap != null) {
+                lifecycleScope.launchWhenCreated {
+                    viewModel.uploadImage(bitmap)
+                }
+            }
+        }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        saveUiData(outState)
+    private fun displayMessage(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun saveUiData(bundle: Bundle) {
@@ -103,11 +149,30 @@ class NotesEditFragment : DialogFragment() {
         }
     }
 
+    private val permissionLauncher: ActivityResultLauncher<String> = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if (it) selectImage()
+        else {
+            messageDialog(
+                "Permission declined." +
+                    " In order for you to upload images, you need to enable storage permission." +
+                    "\nYou will not be able to use this feature without it.",
+                actionKey = "OK", action = {}
+            ).show()
+        }
+    }
+
+    private fun messageDialog(message: String, actionKey: String, action: () -> Unit): AlertDialog {
+        return MaterialAlertDialogBuilder(requireContext())
+            .setTitle("PERMISSION REQUEST")
+            .setMessage(message)
+            .setPositiveButton(actionKey) { _, _ -> action() }
+            .setNegativeButton("CANCEL") { _, _ -> }
+            .create()
+    }
+
     companion object {
         const val TITLE = "title"
         const val DESCRIPTION = "desc"
         const val STATUS = "status"
     }
-
-    data class NoteData(var title: String, var description: String, var status: String = "")
 }
