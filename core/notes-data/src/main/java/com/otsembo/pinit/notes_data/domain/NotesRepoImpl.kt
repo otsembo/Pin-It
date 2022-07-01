@@ -1,7 +1,9 @@
 package com.otsembo.pinit.notes_data.domain
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.otsembo.pinit.notes_data.common.AppResource
 import com.otsembo.pinit.notes_data.data.model.AppNote
 import com.otsembo.pinit.notes_data.data.repository.NotesRepository
 import kotlinx.coroutines.CoroutineScope
@@ -13,19 +15,20 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class NotesRepoImpl(
-    private val user: FirebaseUser,
     private val fireStore: FirebaseFirestore,
     private val coroutineScope: CoroutineScope
 ) : NotesRepository {
 
-    private val _notesFlow: MutableStateFlow<List<AppNote>> = MutableStateFlow(emptyList())
-    private val notesFlow: StateFlow<List<AppNote>> = _notesFlow
+    private val _notesFlow: MutableStateFlow<AppResource<List<AppNote>>> = MutableStateFlow(AppResource.Idle(data = emptyList()))
+    private val notesFlow: StateFlow<AppResource<List<AppNote>>> = _notesFlow
 
     private val _errorMessage: MutableSharedFlow<String> = MutableSharedFlow()
     override val errorMessage: SharedFlow<String> = _errorMessage
 
+    private val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+
     override suspend fun createNote(appNote: AppNote): String {
-        appNote.user = user.uid
+        appNote.user = user?.uid
         var addNoteMessage = ADD_NOTES_FAIL
         val notesDocument = fireStore.collection(NOTES_COLLECTION).document()
         appNote.noteId = notesDocument.id
@@ -52,7 +55,7 @@ class NotesRepoImpl(
         return deleteNoteMessage
     }
 
-    override fun displayNotes(userId: String): StateFlow<List<AppNote>> {
+    override fun displayNotes(): StateFlow<AppResource<List<AppNote>>> {
         fireStore.collection(NOTES_COLLECTION).addSnapshotListener { value, error ->
             // show error if any
             error?.let { displayError(it.message ?: READ_NOTES_FAILED) }

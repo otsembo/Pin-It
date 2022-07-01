@@ -11,7 +11,7 @@ import org.koin.dsl.single
 
 object AppModules {
     fun appDependencies(): List<Module> {
-        return listOf(AuthModule.dependencies(), NotesDataModule.dependencies())
+        return listOf(AuthModule.dependencies(), NotesDataModule.dependencies(), globalDependencies())
     }
     private fun globalDependencies() = module {
         single(named("ioScope")) { CoroutineScope(Dispatchers.IO) }

@@ -1,6 +1,8 @@
 package com.otsembo.pinit.notes_data.data.model
 
 import kotlinx.serialization.Serializable
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Serializable
 data class AppNote(
@@ -8,11 +10,12 @@ data class AppNote(
     var noteTitle: String? = null,
     var description: String? = null,
     var status: NoteStatus = NoteStatus.TODO,
-    var user: String,
-    var imageUrl: String? = null
+    var user: String? = null,
+    var imageUrl: String? = null,
+    var dateCreated: String = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 )
 
-enum class NoteStatus(status: String) {
+enum class NoteStatus(val status: String) {
     TODO("todo"),
     ONGOING("ongoing"),
     DONE("done")

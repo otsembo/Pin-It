@@ -1,5 +1,6 @@
 package com.otsembo.pinit.notes_data.data.repository
 
+import com.otsembo.pinit.notes_data.common.AppResource
 import com.otsembo.pinit.notes_data.data.model.AppNote
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,5 +11,5 @@ interface NotesRepository : KoinComponent {
     suspend fun createNote(appNote: AppNote): String
     suspend fun updateNote(appNote: AppNote): String
     suspend fun deleteNote(noteId: String): String
-    fun displayNotes(userId: String): StateFlow<List<AppNote>>
+    fun displayNotes(): StateFlow<AppResource<List<AppNote>>>
 }
