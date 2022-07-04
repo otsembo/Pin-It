@@ -15,7 +15,7 @@ object NotesDataModule {
 
         factory { Firebase.firestore as FirebaseFirestore }
 
-        single { NotesRepoImpl(coroutineScope = get(qualifier("mainScope")), fireStore = get()) as NotesRepository }
+        single { NotesRepoImpl(coroutineScope = get(qualifier("ioScope")), fireStore = get()) as NotesRepository }
 
         viewModel { NoteEditVM(get()) }
     }

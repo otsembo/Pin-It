@@ -3,13 +3,15 @@ package com.otsembo.pinit.notes_data.presentation.add
 import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -18,48 +20,43 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.transition.TransitionInflater
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.otsembo.pinit.notes_data.common.AppResource
-import com.otsembo.pinit.notes_data.data.model.AppNote
 import com.otsembo.pinit.notes_data.databinding.FragmentNoteEditBinding
 import com.otsembo.pinit.notes_data.presentation.viewmodels.NoteEditVM
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class NotesEditFragment : DialogFragment() {
 
     private lateinit var binding: FragmentNoteEditBinding
     private val viewModel: NoteEditVM by inject()
-    private val appNote: AppNote by lazy {
-        AppNote()
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = FragmentNoteEditBinding.inflate(layoutInflater)
-        binding.noteData = appNote
-        initClicks()
         return AlertDialog.Builder(requireContext(), com.otsembo.pinit.theming.R.style.FullScreenDialog)
             .setView(binding.root)
             .create()
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewmodel = viewModel
+        initClicks()
+        registerFlowLaunchers()
+        return binding.root
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val inflater = TransitionInflater.from(requireContext())
-        enterTransition = inflater.inflateTransition(com.otsembo.pinit.theming.R.transition.slide_up)
         isCancelable = false
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadUiData(savedInstanceState)
-        lifecycleScope.launchWhenResumed {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                initFlowObservers()
-            }
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -67,17 +64,14 @@ class NotesEditFragment : DialogFragment() {
         saveUiData(outState)
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        viewModel.resetDialogState()
+    }
+
     private fun initClicks() {
-        binding.imgClose.setOnClickListener {
-            dismiss()
-        }
-        binding.txtSave.setOnClickListener {
-            appNote.status = viewModel.selectStatus(binding.txtNoteStatus.text.toString())
-            viewModel.createNote(appNote)
-            dismiss()
-        }
+
         binding.txtAddPhoto.setOnClickListener {
-            Log.d("TAG", "initClicks: clicked")
             when {
                 ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> { selectImage() }
                 shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
@@ -98,19 +92,35 @@ class NotesEditFragment : DialogFragment() {
         activityResultLauncher.launch(intent)
     }
 
-    private suspend fun initFlowObservers() {
-        viewModel.errorFlow.collectLatest {
-            displayMessage(it)
+    private fun registerFlowLaunchers() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.errorMessage.collectLatest {
+                    displayMessage(it)
+                }
+            }
         }
-        viewModel.notesImageLocation.collectLatest {
-            appNote.imageUrl = it
+
+        lifecycleScope.launch {
+            viewModel.notesImageLocation.collectLatest {
+                viewModel.noteData.value.imageUrl = it
+            }
         }
-        viewModel.notes.collect {
-            when (it) {
-                is AppResource.Idle -> {}
-                is AppResource.Error -> {}
-                is AppResource.Success -> {}
-                is AppResource.Loading -> {}
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.isDialogClose.collect {
+                if (it) this@NotesEditFragment.dismiss()
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.notes.collect {
+                when (it) {
+                    is AppResource.Idle -> {}
+                    is AppResource.Error -> {}
+                    is AppResource.Success -> {}
+                    is AppResource.Loading -> {}
+                }
             }
         }
     }
@@ -126,9 +136,7 @@ class NotesEditFragment : DialogFragment() {
             } catch (e: Exception) { null }
             binding.noteImage.setImageBitmap(bitmap)
             if (bitmap != null) {
-                lifecycleScope.launchWhenCreated {
-                    viewModel.uploadImage(bitmap)
-                }
+                viewModel.uploadImage(bitmap)
             }
         }
     }
@@ -138,14 +146,14 @@ class NotesEditFragment : DialogFragment() {
     }
 
     private fun saveUiData(bundle: Bundle) {
-        bundle.putString(TITLE, appNote.noteTitle)
-        bundle.putString(DESCRIPTION, appNote.description)
+        bundle.putString(TITLE, viewModel.noteData.value.noteTitle)
+        bundle.putString(DESCRIPTION, viewModel.noteData.value.description)
     }
 
     private fun loadUiData(bundle: Bundle?) {
         bundle?.let {
-            appNote.noteTitle = it.getString(TITLE)
-            appNote.description = it.getString(DESCRIPTION)
+            viewModel.noteData.value.noteTitle = it.getString(TITLE)
+            viewModel.noteData.value.description = it.getString(DESCRIPTION)
         }
     }
 

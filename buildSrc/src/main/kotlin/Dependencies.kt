@@ -76,6 +76,9 @@ object DevLibs {
 
     // CIRCLE IMAGEVIEW
     const val CircleImageView = "de.hdodenhof:circleimageview:${LibVersions.CircleImage}"
+
+    // Apache Commons
+    const val ApacheCommons = "org.apache.commons:commons-lang3:3.12.0"
 }
 
 object TestLibs {

@@ -6,21 +6,43 @@ import androidx.lifecycle.viewModelScope
 import com.otsembo.pinit.notes_data.data.model.AppNote
 import com.otsembo.pinit.notes_data.data.model.NoteStatus
 import com.otsembo.pinit.notes_data.data.repository.NotesRepository
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class NoteEditVM(private val notesRepository: NotesRepository) : ViewModel() {
 
-    val errorFlow = notesRepository.errorMessage
+    val errorMessage = notesRepository.errorMessage
     val notes = notesRepository.displayNotes()
+    val notesImageLocation = notesRepository.notesImageLocation
 
-    private val _notesImageLocation: MutableSharedFlow<String> = MutableSharedFlow()
-    val notesImageLocation: SharedFlow<String> = _notesImageLocation
+    val noteData: MutableStateFlow<AppNote> = MutableStateFlow(AppNote())
 
-    fun createNote(appNote: AppNote) {
+    val noteStatus: MutableStateFlow<String> = MutableStateFlow("")
+
+    private val _isDialogClose: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isDialogClose: StateFlow<Boolean> = _isDialogClose
+
+    private val _isUploadingImage: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLoadingImage: StateFlow<Boolean> = _isUploadingImage
+
+    fun createNote() {
         viewModelScope.launch {
-            notesRepository.createNote(appNote)
+            noteData.value.status = selectStatus(noteStatus.value)
+            notesRepository.createNote(noteData.value)
+            _isDialogClose.emit(false)
+        }
+    }
+
+    fun closeDialog() {
+        viewModelScope.launch {
+            _isDialogClose.emit(true)
+        }
+    }
+
+    fun resetDialogState() {
+        viewModelScope.launch {
+            _isDialogClose.emit(false)
         }
     }
 
@@ -36,8 +58,12 @@ class NoteEditVM(private val notesRepository: NotesRepository) : ViewModel() {
         }
     }
 
-    suspend fun uploadImage(bitmap: Bitmap) {
-        _notesImageLocation.emit(notesRepository.storeImage(bitmap))
+    fun uploadImage(bitmap: Bitmap) {
+        viewModelScope.launch {
+            _isUploadingImage.value = true
+            notesRepository.storeImage(bitmap)
+            _isUploadingImage.value = false
+        }
     }
 
     fun selectStatus(status: String): NoteStatus {

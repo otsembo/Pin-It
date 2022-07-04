@@ -1,6 +1,7 @@
 package com.otsembo.pinit.notes_data.domain
 
 import android.graphics.Bitmap
+import android.icu.util.Calendar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,10 +17,10 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import org.apache.commons.lang3.RandomStringUtils
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.util.*
-import kotlin.random.Random
 
 class NotesRepoImpl(
     private val fireStore: FirebaseFirestore,
@@ -31,6 +32,9 @@ class NotesRepoImpl(
 
     private val _errorMessage: MutableSharedFlow<String> = MutableSharedFlow()
     override val errorMessage: SharedFlow<String> = _errorMessage
+
+    private val _notesImageLocation: MutableSharedFlow<String> = MutableSharedFlow()
+    override val notesImageLocation: SharedFlow<String> = _notesImageLocation
 
     private val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     private val storageReference: StorageReference = FirebaseStorage.getInstance().reference
@@ -72,19 +76,16 @@ class NotesRepoImpl(
     }
 
     @Throws(IOException::class)
-    override suspend fun storeImage(imageBitmap: Bitmap): String {
+    override suspend fun storeImage(imageBitmap: Bitmap) {
         val outputStream = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.WEBP_LOSSLESS, IMAGE_QUALITY, outputStream)
-        val randomName = (1..IMAGE_NAME_LENGTH)
-            .map { _ -> Random.nextInt(0, charPool.size) }
-            .map(charPool::get)
-            .joinToString("") + ".webp"
+        val randomName = Calendar.getInstance().timeInMillis.toString() + RandomStringUtils.randomAlphanumeric(IMAGE_NAME_LENGTH) + ".webp"
         val locationRef = storageReference.child("images/$randomName")
-        val uploadTask = locationRef.putBytes(outputStream.toByteArray())
-        uploadTask.addOnCompleteListener {
-            if (!it.isSuccessful) it.exception?.message?.let { exceptionMessage -> displayError(error = exceptionMessage) }
-        }.await()
-        return locationRef.path
+        locationRef.putBytes(outputStream.toByteArray())
+            .addOnCompleteListener {
+                if (!it.isSuccessful) it.exception?.message?.let { exceptionMessage -> displayError(error = exceptionMessage) }
+            }.await()
+        _notesImageLocation.emit(locationRef.path)
     }
 
     private fun displayError(error: String) {
@@ -103,7 +104,5 @@ class NotesRepoImpl(
 
         const val IMAGE_QUALITY = 100
         const val IMAGE_NAME_LENGTH = 30
-
-        private val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
     }
 }

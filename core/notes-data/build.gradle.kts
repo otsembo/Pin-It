@@ -78,6 +78,9 @@ dependencies {
     // Coroutine Play Services
     implementation(DevLibs.CoroutinePlayServices)
 
+    // Apache Commons
+    implementation(DevLibs.ApacheCommons)
+
     // UNIT TEST LIBS
     testImplementation(TestLibs.Junit4)
     testImplementation(TestLibs.KoinTest)
