@@ -53,6 +53,20 @@
                 app:drawableStartCompat="@drawable/ic_dashboard"
                 android:drawablePadding="@dimen/general_field_margin"/>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You do not have any notes yet"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:drawableTop="@drawable/ic_note_missing"
+                android:drawablePadding="5dp"
+                style="@style/TextIconButtons"
+                android:id="@+id/txtNoNotes"
+                />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,6 +88,20 @@
                 style="@style/TextIconButtons"
                 app:drawableStartCompat="@drawable/ic_reminder"
                 android:drawablePadding="@dimen/general_field_margin"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You do not have any reminders yet"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:drawableTop="@drawable/ic_reminder_missing"
+                android:drawablePadding="5dp"
+                style="@style/TextIconButtons"
+                android:id="@+id/txtNoReminders"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
