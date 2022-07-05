@@ -71,6 +71,17 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialogAppBar"
+            android:indeterminate="true"
+            android:id="@+id/uploadLoader"
+            app:isLoading="@{viewmodel.appState}"
+            />
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +90,7 @@
             android:id="@+id/tilNoteTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dialogAppBar"
+            app:layout_constraintTop_toBottomOf="@id/uploadLoader"
             android:layout_marginStart="@dimen/register_side_general_margin"
             android:layout_marginEnd="@dimen/register_side_general_margin"
             android:layout_marginTop="@dimen/edt_text_margin"

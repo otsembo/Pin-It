@@ -20,11 +20,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.otsembo.pinit.notes_data.common.AppResource
 import com.otsembo.pinit.notes_data.databinding.FragmentNoteEditBinding
 import com.otsembo.pinit.notes_data.presentation.viewmodels.NoteEditVM
+import com.otsembo.pinit.theming.presentation.fullScreenDialog
+import com.otsembo.pinit.theming.presentation.regularDialog
+import com.otsembo.pinit.theming.presentation.statusDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -33,19 +35,21 @@ class NotesEditFragment : DialogFragment() {
 
     private lateinit var binding: FragmentNoteEditBinding
     private val viewModel: NoteEditVM by inject()
+    private lateinit var statusDialog: AlertDialog
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = FragmentNoteEditBinding.inflate(layoutInflater)
-        return AlertDialog.Builder(requireContext(), com.otsembo.pinit.theming.R.style.FullScreenDialog)
-            .setView(binding.root)
-            .create()
+        return fullScreenDialog(view = binding.root)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
         initClicks()
-        registerFlowLaunchers()
+        registerFlowCollectors()
+        statusDialog = statusDialog(
+            title = "SUCCESS", message = "Uploaded note successfully", actionKey = "DONE", action = { statusDialog.dismiss(); viewModel.closeDialog() }
+        )
         return binding.root
     }
 
@@ -69,13 +73,59 @@ class NotesEditFragment : DialogFragment() {
         viewModel.resetDialogState()
     }
 
+    // UI DATA SAVED INSTANCE
+    private fun saveUiData(bundle: Bundle) {
+        bundle.putString(TITLE, viewModel.noteData.value.noteTitle)
+        bundle.putString(DESCRIPTION, viewModel.noteData.value.description)
+    }
+
+    private fun loadUiData(bundle: Bundle?) {
+        bundle?.let {
+            viewModel.noteData.value.noteTitle = it.getString(TITLE)
+            viewModel.noteData.value.description = it.getString(DESCRIPTION)
+        }
+    }
+
+    // INTENT GALLERY SELECTOR
+    private fun selectImage() {
+        val intent = Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT)
+        activityResultLauncher.launch(intent)
+    }
+
+    // FLOW COLLECTORS
+    private fun registerFlowCollectors() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.errorMessage.collectLatest {
+                    displayMessage(it)
+                }
+            }
+        }
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.isDialogClose.collect {
+                if (it) this@NotesEditFragment.dismiss()
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.appState.collectLatest {
+                if (it is AppResource.Success) {
+                    statusDialog.show()
+                }
+            }
+        }
+    }
+
+    // DIALOG LAUNCHERS
     private fun initClicks() {
 
         binding.txtAddPhoto.setOnClickListener {
             when {
                 ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> { selectImage() }
                 shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                    messageDialog(
+                    regularDialog(
+                        title = "PERMISSION ERROR",
                         "Permission not granted." +
                             " In order for you to upload images, you need to enable storage permission." +
                             "\nYou will not be able to use this feature without it.",
@@ -87,47 +137,26 @@ class NotesEditFragment : DialogFragment() {
         }
     }
 
-    private fun selectImage() {
-        val intent = Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT)
-        activityResultLauncher.launch(intent)
+    // SNACKBAR MESSAGE DISPLAY
+    private fun displayMessage(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun registerFlowLaunchers() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.errorMessage.collectLatest {
-                    displayMessage(it)
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.notesImageLocation.collectLatest {
-                viewModel.noteData.value.imageUrl = it
-            }
-        }
-
-        lifecycleScope.launchWhenResumed {
-            viewModel.isDialogClose.collect {
-                if (it) this@NotesEditFragment.dismiss()
-            }
-        }
-
-        lifecycleScope.launchWhenStarted {
-            viewModel.notes.collect {
-                when (it) {
-                    is AppResource.Idle -> {}
-                    is AppResource.Error -> {}
-                    is AppResource.Success -> {}
-                    is AppResource.Loading -> {}
-                }
-            }
+    // ACTIVITY RESULT LAUNCHERS
+    private val permissionLauncher: ActivityResultLauncher<String> = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if (it) selectImage()
+        else {
+            regularDialog(
+                title = "PERMISSION ERROR",
+                "Permission declined." +
+                    " In order for you to upload images, you need to enable storage permission." +
+                    "\nYou will not be able to use this feature without it.",
+                actionKey = "OK", action = {}
+            ).show()
         }
     }
 
-    private val activityResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
+    private val activityResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             val intent = it.data
             val data = intent?.data
@@ -141,46 +170,8 @@ class NotesEditFragment : DialogFragment() {
         }
     }
 
-    private fun displayMessage(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
-    }
-
-    private fun saveUiData(bundle: Bundle) {
-        bundle.putString(TITLE, viewModel.noteData.value.noteTitle)
-        bundle.putString(DESCRIPTION, viewModel.noteData.value.description)
-    }
-
-    private fun loadUiData(bundle: Bundle?) {
-        bundle?.let {
-            viewModel.noteData.value.noteTitle = it.getString(TITLE)
-            viewModel.noteData.value.description = it.getString(DESCRIPTION)
-        }
-    }
-
-    private val permissionLauncher: ActivityResultLauncher<String> = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-        if (it) selectImage()
-        else {
-            messageDialog(
-                "Permission declined." +
-                    " In order for you to upload images, you need to enable storage permission." +
-                    "\nYou will not be able to use this feature without it.",
-                actionKey = "OK", action = {}
-            ).show()
-        }
-    }
-
-    private fun messageDialog(message: String, actionKey: String, action: () -> Unit): AlertDialog {
-        return MaterialAlertDialogBuilder(requireContext())
-            .setTitle("PERMISSION REQUEST")
-            .setMessage(message)
-            .setPositiveButton(actionKey) { _, _ -> action() }
-            .setNegativeButton("CANCEL") { _, _ -> }
-            .create()
-    }
-
     companion object {
         const val TITLE = "title"
         const val DESCRIPTION = "desc"
-        const val STATUS = "status"
     }
 }

@@ -1,12 +1,17 @@
 package com.otsembo.pinit.notes_data.presentation
 
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
+import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.otsembo.pinit.notes_data.common.AppResource
 
 @BindingAdapter("isLoading")
 fun ProgressBar.isLoading(isLoading: Boolean) {
-    Log.d("TAG", "Data Loading: $isLoading")
     this.visibility = if (isLoading) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("isLoading")
+fun LinearProgressIndicator.isLoading(uploadState: AppResource<String>) {
+    this.visibility = if (uploadState is AppResource.Loading) View.VISIBLE else View.GONE
 }
