@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 class NoteEditVM(private val notesRepository: NotesRepository) : ViewModel() {
 
     val errorMessage = notesRepository.errorMessage
-    val notes = notesRepository.displayNotes()
     private val notesImageLocation = notesRepository.notesImageLocation
 
     val noteData: MutableStateFlow<AppNote> = MutableStateFlow(AppNote())

@@ -59,6 +59,12 @@ dependencies {
     implementation(DevLibs.FirebaseCloudStorage)
     implementation(DevLibs.FirebaseFirestore)
 
+    // CIRCLE IMAGE VIEW
+    implementation(DevLibs.CircleImageView)
+
+    // Coil
+    implementation(DevLibs.Coil)
+
     // Kotlin Serialization
     implementation(DevLibs.KotlinSerialization)
 

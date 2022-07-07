@@ -23,6 +23,8 @@ object LibVersions {
     const val CoroutinePlayServices = "1.5.1"
 
     const val CircleImage = "3.1.0"
+
+    const val Coil = "2.1.0"
 }
 
 object TestVersions {
@@ -76,6 +78,9 @@ object DevLibs {
 
     // CIRCLE IMAGEVIEW
     const val CircleImageView = "de.hdodenhof:circleimageview:${LibVersions.CircleImage}"
+
+    // Coil
+    const val Coil = "io.coil-kt:coil:${LibVersions.Coil}"
 
     // Apache Commons
     const val ApacheCommons = "org.apache.commons:commons-lang3:3.12.0"

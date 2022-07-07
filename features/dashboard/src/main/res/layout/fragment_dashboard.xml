@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.otsembo.notes.presentation.DashboardVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,6 +55,17 @@
                 app:drawableStartCompat="@drawable/ic_dashboard"
                 android:drawablePadding="@dimen/general_field_margin"/>
 
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/progressNotes"
+                android:indeterminate="true"
+                style="@style/Widget.Material3.CircularProgressIndicator"
+                app:dashboardLoading="@{viewModel.notes}"
+                />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,7 +87,9 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/general_field_margin"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/notes_card_item"/>
+                app:latestNotes="@{viewModel.adapter}"
+                tools:listitem="@layout/notes_card_item"
+                />
 
 
             <TextView
@@ -88,6 +103,17 @@
                 style="@style/TextIconButtons"
                 app:drawableStartCompat="@drawable/ic_reminder"
                 android:drawablePadding="@dimen/general_field_margin"
+                />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:indeterminate="true"
+                android:id="@+id/progressReminders"
+                style="@style/Widget.Material3.CircularProgressIndicator"
+                app:dashboardLoading="@{viewModel.notes}"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView

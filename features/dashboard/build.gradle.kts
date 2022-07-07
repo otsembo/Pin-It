@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -53,6 +54,13 @@ dependencies {
 
     // CIRCLE IMAGE VIEW
     implementation(DevLibs.CircleImageView)
+
+    // Coil
+    implementation(DevLibs.Coil)
+
+    // Koin
+    implementation(DevLibs.KoinCore)
+    implementation(DevLibs.KoinAndroid)
 
     // FIREBASE
     platform(DevLibs.Firebase)

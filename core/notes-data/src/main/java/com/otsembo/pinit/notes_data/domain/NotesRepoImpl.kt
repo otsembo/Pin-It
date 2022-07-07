@@ -5,6 +5,7 @@ import android.icu.util.Calendar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.otsembo.pinit.notes_data.common.AppResource
@@ -68,10 +69,20 @@ class NotesRepoImpl(
     }
 
     override fun displayNotes(): StateFlow<AppResource<List<AppNote>>> {
-        fireStore.collection(NOTES_COLLECTION).addSnapshotListener { value, error ->
-            // show error if any
-            error?.let { displayError(it.message ?: READ_NOTES_FAILED) }
-        }
+        fireStore.collection(NOTES_COLLECTION)
+            .whereEqualTo(USER_ID, null)
+            .orderBy(DATE_CREATED, Query.Direction.DESCENDING)
+            .addSnapshotListener { value, error ->
+                // show error if any
+                error?.let { displayError(it.message ?: READ_NOTES_FAILED) }
+                // display info retrieved
+                value?.let {
+                    val userNotes = it.toObjects(AppNote::class.java)
+                    coroutineScope.launch {
+                        _notesFlow.emit(AppResource.Success(data = userNotes))
+                    }
+                }
+            }
         return notesFlow
     }
 
@@ -94,6 +105,8 @@ class NotesRepoImpl(
 
     companion object {
         const val NOTES_COLLECTION = "notes"
+        const val USER_ID = "user"
+        const val DATE_CREATED = "dateCreated"
         const val ADD_NOTES_FAIL = "There was an error adding your note"
         const val ADD_NOTES_SUCCESS = "Note was added successfully"
         const val UPDATE_NOTES_FAIL = "Note was not successfully updated"

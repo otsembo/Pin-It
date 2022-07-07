@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="note"
+            type="com.otsembo.pinit.notes_data.data.model.AppNote" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/general_field_margin"
+        app:cardElevation="@dimen/cardview_default_elevation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    tools:src="@tools:sample/backgrounds/scenic"
+                    android:scaleType="centerCrop"
+                    app:civ_border_width="2dp"
+                    app:noteImage="@{note.imageUrl}"
+                    android:id="@+id/imgNoteTitle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@tools:sample/full_names"
+                    android:text="@{note.noteTitle}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="4"
+                android:layout_marginBottom="@dimen/general_field_margin"
+                android:layout_marginTop="10dp"
+                tools:text="@tools:sample/lorem/random"
+                android:text="@{note.description}"
+                android:textStyle="bold"
+                android:textSize="17sp" />
+
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

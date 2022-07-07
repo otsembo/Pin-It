@@ -1,5 +1,6 @@
 package com.otsembo.pinit.di
 
+import com.otsembo.notes.di.dashboardModule
 import com.otsembo.pinit.authentication.di.AuthModule
 import com.otsembo.pinit.notes_data.di.NotesDataModule
 import kotlinx.coroutines.CoroutineScope
@@ -11,7 +12,7 @@ import org.koin.dsl.single
 
 object AppModules {
     fun appDependencies(): List<Module> {
-        return listOf(AuthModule.dependencies(), NotesDataModule.dependencies(), globalDependencies())
+        return listOf(AuthModule.dependencies(), NotesDataModule.dependencies(), dashboardModule, globalDependencies())
     }
     private fun globalDependencies() = module {
         single(named("ioScope")) { CoroutineScope(Dispatchers.IO) }
