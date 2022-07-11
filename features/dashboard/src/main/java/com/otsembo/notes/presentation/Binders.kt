@@ -16,3 +16,18 @@ fun CircularProgressIndicator.isLoading(dataLoading: AppResource<*>) {
 fun RecyclerView.latestNotes(adapter: NotesAdapter) {
     this.adapter = adapter
 }
+
+@BindingAdapter("dashboardStatus")
+fun View.isDashboardEmpty(dashboardStatus: DashboardVM.DashboardStatus) {
+    visibility = if (dashboardStatus.isRemindersEmpty && dashboardStatus.isNotesEmpty) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("latestNotes")
+fun View.isNotesEmpty(dashboardStatus: DashboardVM.DashboardStatus) {
+    visibility = if (dashboardStatus.isNotesEmpty) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("latestReminders")
+fun View.isRemindersEmpty(dashboardStatus: DashboardVM.DashboardStatus) {
+    visibility = if (dashboardStatus.isRemindersEmpty) View.VISIBLE else View.GONE
+}

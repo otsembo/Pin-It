@@ -14,6 +14,9 @@ import kotlinx.coroutines.launch
 
 class DashboardVM(private val notesRepository: NotesRepository) : ViewModel() {
 
+    // reminders and notes status
+    private val dashboardStatus = DashboardStatus()
+
     // notes info
     val notes = notesRepository.displayNotes()
 
@@ -22,6 +25,12 @@ class DashboardVM(private val notesRepository: NotesRepository) : ViewModel() {
 
     private val _errorMessage: MutableSharedFlow<String> = MutableSharedFlow()
     val errorMessage: SharedFlow<String> = _errorMessage
+
+    private val _isDashboardEmpty: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val isDashboardEmpty: StateFlow<Boolean> = _isDashboardEmpty
+
+    private val _dashboardStatus: MutableStateFlow<DashboardStatus> = MutableStateFlow(dashboardStatus)
+    val xDashboardStatus: StateFlow<DashboardStatus> = _dashboardStatus
 
     val adapter = NotesAdapter()
 
@@ -35,7 +44,11 @@ class DashboardVM(private val notesRepository: NotesRepository) : ViewModel() {
                 when (it) {
                     is AppResource.Loading -> Unit
                     is AppResource.Success ->
-                        it.data?.let { appData -> _latestNotes.emit(appData) }
+                        it.data?.let { appData ->
+                            dashboardStatus.isNotesEmpty = appData.isNotEmpty()
+                            _dashboardStatus.emit(dashboardStatus)
+                            _latestNotes.emit(appData)
+                        }
                     is AppResource.Error ->
                         it.message?.let { message -> _errorMessage.emit(message) }
                     is AppResource.Idle -> Unit
@@ -43,4 +56,7 @@ class DashboardVM(private val notesRepository: NotesRepository) : ViewModel() {
             }
         }
     }
+
+
+    data class DashboardStatus(var isNotesEmpty: Boolean = true, var isRemindersEmpty: Boolean = true)
 }
