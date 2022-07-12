@@ -14,11 +14,8 @@ import kotlinx.coroutines.launch
 
 class DashboardVM(private val notesRepository: NotesRepository) : ViewModel() {
 
-    // reminders and notes status
-    private val dashboardStatus = DashboardStatus()
-
     // notes info
-    val notes = notesRepository.displayNotes()
+    val notes = notesRepository.displayLatestNotes()
 
     private val _latestNotes: MutableStateFlow<List<AppNote>> = MutableStateFlow(emptyList())
     val latestNotes: StateFlow<List<AppNote>> = _latestNotes
@@ -29,8 +26,11 @@ class DashboardVM(private val notesRepository: NotesRepository) : ViewModel() {
     private val _isDashboardEmpty: MutableStateFlow<Boolean> = MutableStateFlow(true)
     val isDashboardEmpty: StateFlow<Boolean> = _isDashboardEmpty
 
-    private val _dashboardStatus: MutableStateFlow<DashboardStatus> = MutableStateFlow(dashboardStatus)
-    val xDashboardStatus: StateFlow<DashboardStatus> = _dashboardStatus
+    private val _latestNotesState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val latestNotesState: StateFlow<Boolean> = _latestNotesState
+
+    private val _latestReminderState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val latestReminderState: StateFlow<Boolean> = _latestReminderState
 
     val adapter = NotesAdapter()
 
@@ -45,8 +45,8 @@ class DashboardVM(private val notesRepository: NotesRepository) : ViewModel() {
                     is AppResource.Loading -> Unit
                     is AppResource.Success ->
                         it.data?.let { appData ->
-                            dashboardStatus.isNotesEmpty = appData.isNotEmpty()
-                            _dashboardStatus.emit(dashboardStatus)
+                            _isDashboardEmpty.emit(appData.isEmpty())
+                            _latestNotesState.emit(appData.isEmpty())
                             _latestNotes.emit(appData)
                         }
                     is AppResource.Error ->
@@ -56,7 +56,4 @@ class DashboardVM(private val notesRepository: NotesRepository) : ViewModel() {
             }
         }
     }
-
-
-    data class DashboardStatus(var isNotesEmpty: Boolean = true, var isRemindersEmpty: Boolean = true)
 }

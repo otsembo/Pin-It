@@ -14,5 +14,6 @@ interface NotesRepository : KoinComponent {
     suspend fun updateNote(appNote: AppNote): String
     suspend fun deleteNote(noteId: String): String
     fun displayNotes(): StateFlow<AppResource<List<AppNote>>>
+    fun displayLatestNotes(): StateFlow<AppResource<List<AppNote>>>
     suspend fun storeImage(imageBitmap: Bitmap)
 }

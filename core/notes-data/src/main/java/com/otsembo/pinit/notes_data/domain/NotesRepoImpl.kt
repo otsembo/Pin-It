@@ -86,6 +86,25 @@ class NotesRepoImpl(
         return notesFlow
     }
 
+    override fun displayLatestNotes(): StateFlow<AppResource<List<AppNote>>> {
+        fireStore.collection(NOTES_COLLECTION)
+            .whereEqualTo(USER_ID, null)
+            .limit(LATEST_NOTES_LIMIT)
+            .orderBy(DATE_CREATED, Query.Direction.DESCENDING)
+            .addSnapshotListener { value, error ->
+                // show error if any
+                error?.let { displayError(it.message ?: READ_NOTES_FAILED) }
+                // display info retrieved
+                value?.let {
+                    val userNotes = it.toObjects(AppNote::class.java)
+                    coroutineScope.launch {
+                        _notesFlow.emit(AppResource.Success(data = userNotes))
+                    }
+                }
+            }
+        return notesFlow
+    }
+
     @Throws(IOException::class)
     override suspend fun storeImage(imageBitmap: Bitmap) {
         val outputStream = ByteArrayOutputStream()
@@ -117,5 +136,7 @@ class NotesRepoImpl(
 
         const val IMAGE_QUALITY = 100
         const val IMAGE_NAME_LENGTH = 30
+
+        const val LATEST_NOTES_LIMIT = 5L
     }
 }

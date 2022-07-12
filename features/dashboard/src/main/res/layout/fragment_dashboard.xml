@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:dashboardStatus="@{viewModel.XDashboardStatus}"
+            app:uiState="@{viewModel.isDashboardEmpty}"
             android:id="@+id/noInfo">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -66,6 +66,7 @@
                 android:textSize="24sp"
                 style="@style/TextIconButtons"
                 app:drawableStartCompat="@drawable/ic_dashboard"
+                app:uiState="@{!viewModel.isDashboardEmpty}"
                 android:drawablePadding="@dimen/general_field_margin"/>
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -91,7 +92,7 @@
                 android:drawablePadding="5dp"
                 style="@style/TextIconButtons"
                 android:id="@+id/txtNoNotes"
-                app:latestNotes="@{viewModel.XDashboardStatus}"
+                app:uiState="@{viewModel.latestNotesState}"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -116,6 +117,7 @@
                 android:textSize="24sp"
                 style="@style/TextIconButtons"
                 app:drawableStartCompat="@drawable/ic_reminder"
+                app:uiState="@{!viewModel.isDashboardEmpty}"
                 android:drawablePadding="@dimen/general_field_margin"
                 />
 
@@ -142,7 +144,7 @@
                 android:drawablePadding="5dp"
                 style="@style/TextIconButtons"
                 android:id="@+id/txtNoReminders"
-                app:latestReminders="@{viewModel.XDashboardStatus}"
+                app:uiState="@{viewModel.latestReminderState}"
                 />
 
             <androidx.recyclerview.widget.RecyclerView

@@ -23,7 +23,15 @@ fun LinearProgressIndicator.isLoading(uploadState: AppResource<String>) {
 }
 
 @BindingAdapter("noteImage")
-fun CircleImageView.noteImage(imageUrl: String?){
-    val image = if(imageUrl == null) R.drawable.ic_default_note else Firebase.storage.getReferenceFromUrl(NotesUtil.getFirebaseImage(imageUrl))
-    this.load(image)
+fun CircleImageView.noteImage(imageUrl: String?) {
+    if (imageUrl.isNullOrEmpty()) this.load(R.drawable.ic_default_note)
+    imageUrl?.let {
+        Firebase.storage.getReferenceFromUrl(NotesUtil.getFirebaseImage(it)).downloadUrl.addOnCompleteListener { downloadTask ->
+            if (downloadTask.isSuccessful) {
+                this.load(downloadTask.result.toString())
+            } else {
+                this.load(R.drawable.ic_default_note)
+            }
+        }
+    }
 }

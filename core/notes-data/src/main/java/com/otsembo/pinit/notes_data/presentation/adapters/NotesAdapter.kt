@@ -33,7 +33,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesHolder>() {
         companion object {
             fun from(parent: ViewGroup): NotesHolder {
                 val inflater = LayoutInflater.from(parent.context)
-                return NotesHolder(NotesCardItemBinding.inflate(inflater))
+                return NotesHolder(NotesCardItemBinding.inflate(inflater, parent, false))
             }
         }
     }
