@@ -44,9 +44,10 @@ dependencies {
     // MODULE DEPENDENCIES
     implementation(project(":core:theming"))
     implementation(project(":core:authentication"))
-    implementation(project(":features:dashboard"))
     implementation(project(":core:navigation"))
     implementation(project(":core:notes-data"))
+    implementation(project(":features:dashboard"))
+    implementation(project(":features:notes"))
 
     // DEVELOPER LIBS
     implementation(DevLibs.Kotlin)

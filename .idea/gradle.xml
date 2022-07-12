@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/core/theming" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/dashboard" />
+            <option value="$PROJECT_DIR$/features/notes" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -30,14 +31,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
 
-    implementation(project(":core:authentication"))
+    // module dependencies
+    implementation(project(":core:theming"))
     implementation(project(":core:notes-data"))
-    implementation(project(":features:dashboard"))
-    implementation(project(":features:notes"))
 
     // DEVELOPER LIBS
     implementation(DevLibs.Kotlin)
@@ -48,9 +51,22 @@ dependencies {
     implementation(DevLibs.NavigationFragment)
     implementation(DevLibs.NavigationUI)
 
+    // CIRCLE IMAGE VIEW
+    implementation(DevLibs.CircleImageView)
+
+    // Coil
+    implementation(DevLibs.Coil)
+
     // Koin
     implementation(DevLibs.KoinCore)
     implementation(DevLibs.KoinAndroid)
+
+    // FIREBASE
+    platform(DevLibs.Firebase)
+    implementation(DevLibs.FirebaseAnalytics)
+    implementation(DevLibs.FirebaseAuth)
+    implementation(DevLibs.FirebaseCloudStorage)
+    implementation(DevLibs.FirebaseFirestore)
 
     // UNIT TEST LIBS
     testImplementation(TestLibs.Junit4)
