@@ -74,6 +74,11 @@ dependencies {
     testImplementation(TestLibs.KoinTest)
     testImplementation(TestLibs.KoinJunitTest)
 
+    testImplementation(TestLibs.MockitoCore)
+    testImplementation(TestLibs.Mockk)
+    testImplementation(TestLibs.MockitoKotlin)
+    testImplementation(TestLibs.Roboelectric)
+
     // ANDROID AND INSTRUMENTATION LIBS
     androidTestImplementation(InstrumentationTestLibs.AndroidJunit)
     androidTestImplementation(InstrumentationTestLibs.Espresso)

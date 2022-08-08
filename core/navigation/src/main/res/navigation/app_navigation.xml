@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/notes_navigation">
+    app:startDestination="@id/dashboard">
 
     <include app:graph="@navigation/auth_navigation" />
     <include app:graph="@navigation/dashboard_navigation" />
     <include app:graph="@navigation/notes_list_navigation" />
+    <fragment
+        android:id="@+id/dashboard"
+        android:name="com.otsembo.notes.presentation.DashboardFragment"
+        android:label="DashboardFragment"
+        tools:layout="@layout/fragment_dashboard"/>
+    <fragment
+        android:id="@+id/notesList"
+        android:name="com.otsembo.pinit.notes.presentation.noteslist.NotesFragment"
+        android:label="NotesFragment"
+        tools:layout="@layout/fragment_notes_list"/>
 </navigation>

@@ -30,6 +30,10 @@ object LibVersions {
 object TestVersions {
 
     const val Junit4 = "4.13.2"
+    const val Roboelectric = "1.4.0"
+    const val MockitoCore = "4.6.1"
+    const val MockitoKotlin = "4.0.0"
+    const val Mockk = "1.12.4"
 }
 
 object InstrumentationTestVersions {
@@ -91,6 +95,10 @@ object TestLibs {
     const val Junit4 = "junit:junit:${TestVersions.Junit4}"
     const val KoinTest = "io.insert-koin:koin-test:${LibVersions.KoinVersion}"
     const val KoinJunitTest = "io.insert-koin:koin-test-junit4:${LibVersions.KoinVersion}"
+    const val Roboelectric = "androidx.test:core:${TestVersions.Roboelectric}"
+    const val MockitoCore = "org.mockito:mockito-core:${TestVersions.MockitoCore}"
+    const val MockitoKotlin = "org.mockito.kotlin:mockito-kotlin:${TestVersions.MockitoKotlin}"
+    const val Mockk = "io.mockk:mockk:${TestVersions.Mockk}"
 }
 
 object InstrumentationTestLibs {
