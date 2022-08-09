@@ -3,12 +3,12 @@
     <item
         android:title="@string/dashboard"
         android:icon="@drawable/ic_dashboard"
-        android:id="@+id/dashboard"
+        android:id="@+id/notes_navigation"
         />
     <item
         android:title="Notes"
         android:icon="@drawable/ic_notes"
-        android:id="@+id/notesList"
+        android:id="@+id/notes_list_navigation"
         />
     <item
         android:title="Reminders"

@@ -28,7 +28,7 @@ class DashboardFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        navController = view.findNavController()
+        navController = binding.root.findNavController()
         // set binding params
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel

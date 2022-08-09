@@ -2,6 +2,7 @@ package com.otsembo.pinit.notes_data.domain
 
 import android.graphics.Bitmap
 import android.icu.util.Calendar
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -92,6 +93,7 @@ class NotesRepoImpl(
             .limit(LATEST_NOTES_LIMIT)
             .orderBy(DATE_CREATED, Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
+                Log.d(TAG, "displayLatestNotes:-> error: $error snapshot: $value")
                 // show error if any
                 error?.let { displayError(it.message ?: READ_NOTES_FAILED) }
                 // display info retrieved
@@ -123,6 +125,9 @@ class NotesRepoImpl(
     }
 
     companion object {
+
+        const val TAG = "NOTES_REPO"
+
         const val NOTES_COLLECTION = "notes"
         const val USER_ID = "user"
         const val DATE_CREATED = "dateCreated"
