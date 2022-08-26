@@ -1,8 +1,10 @@
 package com.otsembo.pinit.notes_data.presentation
 
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.firebase.ktx.Firebase
@@ -10,6 +12,8 @@ import com.google.firebase.storage.ktx.storage
 import com.otsembo.pinit.notes_data.R
 import com.otsembo.pinit.notes_data.common.AppResource
 import com.otsembo.pinit.notes_data.common.NotesUtil
+import com.otsembo.pinit.notes_data.data.model.AppNote
+import com.otsembo.pinit.notes_data.presentation.adapters.NotesAdapter
 import de.hdodenhof.circleimageview.CircleImageView
 
 @BindingAdapter("isLoading")
@@ -34,4 +38,12 @@ fun CircleImageView.noteImage(imageUrl: String?) {
             }
         }
     }
+}
+
+@BindingAdapter("notesList")
+fun RecyclerView.notesAdapter(appNotes: List<AppNote>) {
+    val adapter = NotesAdapter()
+    adapter.submitItems(appNotes)
+    Log.d("NOTES", "$appNotes")
+    this.adapter = adapter
 }
