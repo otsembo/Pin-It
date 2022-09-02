@@ -12,10 +12,6 @@ fun CircularProgressIndicator.isLoading(dataLoading: AppResource<*>) {
     this.visibility = if (dataLoading is AppResource.Loading) View.VISIBLE else View.GONE
 }
 
-@BindingAdapter("latestNotes")
-fun RecyclerView.latestNotes(adapter: NotesAdapter) {
-    this.adapter = adapter
-}
 
 @BindingAdapter("uiState")
 fun View.uiState(isEmpty: Boolean) {

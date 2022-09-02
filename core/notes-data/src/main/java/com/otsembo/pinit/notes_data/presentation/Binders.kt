@@ -47,3 +47,9 @@ fun RecyclerView.notesAdapter(appNotes: List<AppNote>) {
     Log.d("NOTES", "$appNotes")
     this.adapter = adapter
 }
+
+
+@BindingAdapter("latestNotes")
+fun RecyclerView.latestNotes(adapter: NotesAdapter) {
+    this.adapter = adapter
+}

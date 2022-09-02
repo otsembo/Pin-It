@@ -48,6 +48,7 @@ class DashboardVM(private val notesRepository: NotesRepository) : ViewModel() {
                             _isDashboardEmpty.emit(appData.isEmpty())
                             _latestNotesState.emit(appData.isEmpty())
                             _latestNotes.emit(appData)
+                            adapter.submitItems(appData)
                         }
                     is AppResource.Error ->
                         it.message?.let { message -> _errorMessage.emit(message) }
