@@ -16,6 +16,7 @@
         <entry key="core/notes-data/src/main/res/layout/fragment_note_edit.xml" value="0.25" />
         <entry key="core/notes-data/src/main/res/layout/notes_card_item.xml" value="0.25929283771532186" />
         <entry key="core/notes-data/src/main/res/menu/note_status_menu.xml" value="0.29884566053869177" />
+        <entry key="core/reminder-data/src/main/res/layout/fragment_reminder_edit.xml" value="0.34479166666666666" />
         <entry key="core/theming/src/main/res/layout/dialog_loading.xml" value="0.25929283771532186" />
         <entry key="features/authentication/src/main/res/layout/activity_main.xml" value="0.291213768115942" />
         <entry key="features/authentication/src/main/res/layout/fragment_auth_login.xml" value="0.1" />

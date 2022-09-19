@@ -16,10 +16,12 @@
             <option value="$PROJECT_DIR$/core/authentication" />
             <option value="$PROJECT_DIR$/core/navigation" />
             <option value="$PROJECT_DIR$/core/notes-data" />
+            <option value="$PROJECT_DIR$/core/reminder-data" />
             <option value="$PROJECT_DIR$/core/theming" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/dashboard" />
             <option value="$PROJECT_DIR$/features/notes" />
+            <option value="$PROJECT_DIR$/features/reminders" />
           </set>
         </option>
       </GradleProjectSettings>
